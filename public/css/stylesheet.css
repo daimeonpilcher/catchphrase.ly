@@ -1,10 +1,12 @@
 #f1_container {
   position: relative;
-  margin: 10px auto;
-  width: 450px;
-  height: 281px;
+  margin: 10px;
+  width: 300px;
+  height: 100px;
   z-index: 1;
   perspective: 1000;
+  display: inline-block;
+
 
 }
 #f1_container {
@@ -16,7 +18,7 @@
   transform-style: preserve-3d;
   transition: all 1.0s linear;
 }
-#f1_container:hover #f1_card {
+#f1_container:active #f1_card {
   transform: rotateY(180deg);
   box-shadow: -5px 5px 5px #aaa;
 
@@ -35,7 +37,8 @@
   display: block;
   transform: rotateY(180deg);
   box-sizing: border-box;
-  padding: 10px;
+  backface-visibility: hidden;
+    padding: 10px;
   color: white;
   text-align: center;
   background-color: #aaa;

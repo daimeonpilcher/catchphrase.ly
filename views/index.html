@@ -1,46 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>catchphrase.ly</title>
+	<title><catchphrase.ly</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
 </head>
+
+    
+    
 <body>
-	<div class="container">
+	<div class="header"><h1>catchphrase.ly</h1>
+	</div>
+    <hr>
+	<div class="form">
+<!--form-->
+        <h2>Add a new card!</h2>
+        <form id="newPhrase" class="cust-form">
+            <div class="form-group">
+                <input name="catchphrase[phrase]" type="text" class="form-control" id="phrase-input" placeholder="phrase">
+            <div class="form-group">
+               	<input name="catchphrase[definition]" type="text" class="form-control" id="definition-input" placeholder="definition or facts">
+            </div>
+                <button id="Add" class="btn btn-primary" type="submit">Add New!</button>
+            </div>
+        </form>
+	</div>
+
+	<div id="phraseCards" class="container">
+
+	</div>
+</body>
+
+    
+    
+    
+    
+    
+<!--underscore template-->
+<script type="text/template" id="cardTemplate">
 		<div id="f1_container">
 			<div id="f1_card" class="shadow">
-			  	<div class="front face">
-			    	<p><h1>Alan Turing</h1></p>
+			  	<div id="phrase" class="front face">
+			    	<button id="remove" class="remove pull-right" > delete &nbsp;</button>
+                    <p><h2><%= phrase %></h2></p>
 			  	</div>
-			  	<div class="back face center">
+			  	<div id="definition" class="back face center">
 			    	<p>
 			    		<ul>
-			    			<li>Formalized the concept of the algorithm.</li>
-			    			<li>Successfully created a machine that could decrypt Nazi communications created on the "Enigma"</li>
-			    			<li>Prosecuted in 1952 for Homosexual Acts and died two years later from cyanide poisoning</li>
-			    			<li>Granted a posthumous pardon in 2013</li>
-			    			<small><a href="http://en.wikipedia.org/wii/Alan_Turing">Alan Turing, Wikipedia</a></small>
+			    			<li><%= definition %></li>
 			    		</ul>
 			    	</p>
 			  	</div>
 			</div>
 		</div>
-	</div>
-</body>
-<script type="text/template" id="catchPhraseTemplate">
-	<div id="f1_container">
-		<div id="f1_card" class="shadow">
-			  <div class="front face">
-			    	<p><h1>Alan Turing</h1></p>
-			  </div>
-			  <div class="back face center">
-			    	<p>This is nice for exposing more information about an image.</p>
-			    	<p>Any content can go here.</p>
-			  </div>
-		</div>
-	</div>
 </script>
+
+    
+    
 </html>

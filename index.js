@@ -1,6 +1,7 @@
 var express = require("express");
 var path = require("path");
 var bodyParser = require("body-parser")
+var db = require("./models")
 
 var app = express();
 app.use(bodyParser.urlencoded({extended: true}))
@@ -8,28 +9,41 @@ app.use(bodyParser.urlencoded({extended: true}))
 var viewsDir = path.join(process.cwd(), "views");
 
 app.use(express.static('public'));
-var catchPhrases = [{id: 0, phrase: "Alan Turing", definition: "Formalized the concept of the algorithm."},
-					{id: 1, phrase: "Shell", definition: "Referst to a program that allows the user to interact with the cmputer through some kind of interface.  This can be a command line interface or a graphical user interface.  Allows access to the Operating System (OS Layer)"},
-					{id: 2, phrase: "Ternary Operator", definition: "Conditional operator. the Only JS Operator that si frquently used as a shortcut for the if statement.  Condition ? expr1: expr2" },
-					{id: 3, phrase: "GitHub", definiton: "Web based Git repo hosting service"},
-					{id: 4, phrase: "Tim Burners Lee", definition: "Creator of the World Wide Web; founder of the W3C 'World Wide Web Consortium.'"}]
 
+// set root route
 app.get("/", function (req, res) {
 	var homePath = path.join(viewsDir, "index.html");
 	res.sendFile(homePath);
 });
 
+// send data to catchprase URL in browser
 app.get("/catchphrase", function (req, res){
-	var catchphrase=catchPhrases.join(", ");
-	res.send(catchphrase);
+	db.CatchPhrase.find({},
+		function (err, catchphrase) {
+			console.log(200, catchphrase)
+      res.send(catchphrase)
+		})
 });
 
+// add new catchphrases to MongoDB
 app.post("/catchphrase", function (req, res) {
-    console.log(req.body.catchPhrases);
-    var catchphrase = req.body.catchPhrases;
-    catchPhrases.push(catchPhrases.phrase);
-    res.redirect("/catchphrase")
+  db.CatchPhrase.create(req.body.catchphrase, 
+    function (err, catchphrase) {
+      console.log(201, catchphrase);
+      res.send(201, catchphrase);
+    });
 });
+
+// delete items from the DB
+app.delete("/catchphrase/:id", function (req, res) {
+  db.CatchPhrase.findOneAndRemove({
+    _id: req.params.id
+  }, function (err, catchphrase) {
+    console.log(204, catchphrase);
+    res.send(204) // success No Content
+  });
+});
+
 
 app.listen(3000, function (req, res) {
     console.log("working!!")
